@@ -1,0 +1,175 @@
+<?php
+
+namespace Spell\MVC;
+
+use Spell\Flash\Path;
+use Spell\Flash\Server;
+use Spell\MVC\Flash\Route;
+use Spell\MVC\Flash\App;
+use Spell\UI\Layout\View;
+use Spell\Server\URS;
+
+class Bootstrap {
+
+    /**
+     *
+     * @var \Spell\MVC\AbstractController 
+     */
+    private $ctrl = null;
+
+    /**
+     *
+     * @var string 
+     */
+    private $ctrlClass = null;
+
+    /**
+     *
+     * @var string 
+     */
+    private $rootPath = null;
+
+    /**
+     *
+     * @var \Spell\MVC\Setting\Route 
+     */
+    private $route = null;
+
+    /**
+     * 
+     * @param string $path
+     * @param \Spell\MVC\Setting\RouteCollection $routeCollection
+     */
+    public function __construct(string $path)
+    {
+        $this->setRootPath($path);
+        $route = Route::getCollection()->findByUrl(Server::getAppUri());
+        $this->setRoute($route);
+        $urs = new URS($this->getRoute()->getUrl());
+        Route::configure($this->getRootPath(), $urs);
+        App::configure($this->getRoute(), $this->getRootPath());
+        $this->loadMethod();
+    }
+
+    /**
+     * 
+     * @return boolean
+     */
+    private function loadMethod()
+    {
+        $this->ctrlClass = App::getNamespace() . 'Controller\\' . Route::getController();
+
+        $this->ctrl = $this->loadController($this->ctrlClass);
+
+        if(!$this->ctrl)
+            return false;
+
+        $this->loadViewContent();
+        $this->ctrl->setTheme($this->getRoute()->getTheme());
+        $this->authenticate();
+        $action = strtolower(Route::getAction());
+        $methodUcwords = ucwords(str_replace(['-', '_'], ' ', $action));
+        $methodUcwords[0] = strtolower($methodUcwords[0]);
+        $method = str_replace(' ', '', $methodUcwords);
+
+        if(!method_exists($this->ctrl, $method))
+            return $this->exception(404, "Method '$this->ctrlClass::$method' cannot be found.");
+
+        $params = $this->getMethodParams($method);
+        if($params === false)
+            return false;
+
+        call_user_func_array([$this->ctrl, $method], $params ?? []);
+    }
+
+    private function authenticate()
+    {
+        $method = 'authenticate';
+        if(!method_exists($this->ctrlClass, $method))
+            return;
+
+        if(method_exists($this->ctrlClass, '__settings'))
+            call_user_func_array([$this->ctrl, '__settings'], []);
+
+        if(!call_user_func_array([$this->ctrl, $method], []))
+            exit;
+    }
+
+    /**
+     * 
+     * $return $theme
+     */
+    public function loadViewContent()
+    {
+        $theme = $this->getRoute()->getTheme();
+        $viewPath = Path::combine([$this->getRootPath(), App::getPath(), 'View', Route::getController()]);
+        $viewFile = Route::getAction() . '.php';
+        $theme->addView('content', new View($viewPath, $viewFile));
+    }
+
+    /**
+     * 
+     * @return \Spell\MVC\AbstractController
+     */
+    private function loadController()
+    {
+
+        $this->ctrlFile = Path::combine($this->ctrlClass) . '.php';
+        if(!file_exists($this->ctrlFile))
+            return $this->exception(404, "'$this->ctrlFile' cannot be found.");
+
+        if(!class_exists($this->ctrlClass))
+            return $this->exception(404, "Controller '$this->ctrlClass' cannot be found.");
+
+        return (new $this->ctrlClass());
+    }
+
+    private function getMethodParams($method)
+    {
+        $reflection = new \ReflectionMethod($this->ctrlClass, $method);
+        $params = Route::getParams();
+        $methodParameters = $reflection->getNumberOfParameters();
+        $methodRequiredParameters = $reflection->getNumberOfRequiredParameters();
+        array_splice($params, 0, 2);
+
+        if(!$reflection->isPublic())
+            return $this->exception(404, "Method '$this->ctrlClass::$method' cannot be found.");
+
+        $totalParams = count($params);
+        if($totalParams < $methodRequiredParameters || $totalParams > $methodParameters)
+            return $this->exception(404, "Method '$this->ctrlClass::$method' must have $totalParams.");
+
+        return $params;
+    }
+
+    private function exception($code, $message)
+    {
+        $theme = $this->getRoute()->getTheme()->setFile('clean.php');
+        $theme->addView('content', new View($theme->getPath(), 'error.php'));
+        $theme->getView('content')->setData(compact('message', 'code'));
+        echo $theme->render();
+    }
+
+    public function getRootPath(): string
+    {
+        return $this->rootPath;
+    }
+
+    public function setRootPath(string $rootPath): Bootstrap
+    {
+        $this->rootPath = $rootPath;
+        return $this;
+    }
+
+    public function getRoute(): Setting\Route
+    {
+        return $this->route;
+    }
+
+    public function setRoute(Setting\Route $route): Bootstrap
+    {
+        $this->route = $route;
+        return $this;
+    }
+
+}
