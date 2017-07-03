@@ -3,6 +3,7 @@
 namespace Spell\Data\Doctrine;
 
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\EntityManager;
 
 /**
  * DataTableRepository
@@ -103,16 +104,6 @@ abstract class DataTableRepository extends AbstractRepository {
         return compact('start', 'limit', 'order', 'dir', 'search');
     }
 
-    /**
-     * 
-     * 
-     * @return \Doctrine\ORM\EntityManager
-     */
-    protected function getEm()
-    {
-        return $this->_em;
-    }
-
     protected function beginTransaction()
     {
         $this->_em->getConnection()->beginTransaction();
@@ -138,7 +129,7 @@ abstract class DataTableRepository extends AbstractRepository {
 
         if($update)
             return $conn->executeUpdate($query, $params);
-        
+
         $statement = $conn->prepare($query);
         foreach($params as $key => $value)
             $statement->bindParam(':' . $key, $value);
