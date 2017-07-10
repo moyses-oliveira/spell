@@ -396,12 +396,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/inflector.git",
-                "reference": "dde035898f2daae9b3b3e5c792f4891cf7aaff80"
+                "reference": "4af64e1756e2bd765ff5e7c36dbcf5ea47e8e576"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/inflector/zipball/dde035898f2daae9b3b3e5c792f4891cf7aaff80",
-                "reference": "dde035898f2daae9b3b3e5c792f4891cf7aaff80",
+                "url": "https://api.github.com/repos/doctrine/inflector/zipball/4af64e1756e2bd765ff5e7c36dbcf5ea47e8e576",
+                "reference": "4af64e1756e2bd765ff5e7c36dbcf5ea47e8e576",
                 "shasum": ""
             },
             "require": {
@@ -455,7 +455,7 @@
                 "singularize",
                 "string"
             ],
-            "time": "2017-06-16 11:07:05"
+            "time": "2017-07-06 08:23:43"
         },
         {
             "name": "doctrine/instantiator",
@@ -813,12 +813,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/debug.git",
-                "reference": "78a5af2f680e00c4f5b949ce88269fda1efa2b75"
+                "reference": "15b0a06a42dc611cebc03f8dc4bff180d95421c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/debug/zipball/78a5af2f680e00c4f5b949ce88269fda1efa2b75",
-                "reference": "78a5af2f680e00c4f5b949ce88269fda1efa2b75",
+                "url": "https://api.github.com/repos/symfony/debug/zipball/15b0a06a42dc611cebc03f8dc4bff180d95421c7",
+                "reference": "15b0a06a42dc611cebc03f8dc4bff180d95421c7",
                 "shasum": ""
             },
             "require": {
@@ -861,7 +861,7 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2017-07-03 07:26:05"
+            "time": "2017-07-06 13:37:40"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -1083,17 +1083,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-servicemanager.git",
-                "reference": "e17f320dbc71c1a63e920bad9e1370f7b9725136"
+                "reference": "93b78c5ea111ddc1f98c763212b8a44686137989"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-servicemanager/zipball/e17f320dbc71c1a63e920bad9e1370f7b9725136",
-                "reference": "e17f320dbc71c1a63e920bad9e1370f7b9725136",
+                "url": "https://api.github.com/repos/zendframework/zend-servicemanager/zipball/93b78c5ea111ddc1f98c763212b8a44686137989",
+                "reference": "93b78c5ea111ddc1f98c763212b8a44686137989",
                 "shasum": ""
             },
             "require": {
                 "container-interop/container-interop": "^1.2",
-                "php": "^5.6 || ^7.0",
+                "php": "^7.1",
                 "psr/container": "^1.0",
                 "zendframework/zend-stdlib": "^3.1"
             },
@@ -1102,15 +1102,15 @@
                 "psr/container-implementation": "^1.0"
             },
             "require-dev": {
-                "mikey179/vfsstream": "^1.6",
-                "ocramius/proxy-manager": "^1.0 || ^2.0",
-                "phpbench/phpbench": "^0.10.0",
-                "phpunit/phpunit": "^5.7 || ^6.0.6",
+                "mikey179/vfsstream": "^1.6.4",
+                "ocramius/proxy-manager": "^2.1.1",
+                "phpbench/phpbench": "^0.13.0",
+                "phpunit/phpunit": "^6.2.3",
                 "zendframework/zend-coding-standard": "~1.0.0"
             },
             "suggest": {
-                "ocramius/proxy-manager": "ProxyManager 1.* to handle lazy initialization of services",
-                "zendframework/zend-stdlib": "zend-stdlib ^2.5 if you wish to use the MergeReplaceKey or MergeRemoveKey features in Config instances"
+                "ocramius/proxy-manager": "ProxyManager ^2.1.1 to handle lazy initialization of services",
+                "zendframework/zend-stdlib": "zend-stdlib ^2.7.7 | ^3.1 if you wish to use the MergeReplaceKey or MergeRemoveKey features in Config instances"
             },
             "bin": [
                 "bin/generate-deps-for-config-factory",
@@ -1138,7 +1138,7 @@
                 "servicemanager",
                 "zf"
             ],
-            "time": "2017-06-29 18:48:34"
+            "time": "2017-07-09 22:22:18"
         },
         {
             "name": "zendframework/zend-stdlib",
