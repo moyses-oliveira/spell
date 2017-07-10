@@ -4,6 +4,7 @@ namespace Spell\Data\Doctrine;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\EntityManager;
+use Spell\Flash\DBAL;
 
 /**
  * Description of AbstractRepository
@@ -12,9 +13,14 @@ use Doctrine\ORM\EntityManager;
  */
 abstract class AbstractRepository extends EntityRepository {
 
-    protected function getEm(): EntityManager
+    /**
+     * 
+     * @param string $alias
+     * @return EntityManager
+     */
+    protected function getEm(string $alias = 'default'): EntityManager
     {
-        return $this->getEntityManager();
+        return DBAL::get($alias)->getEm();
     }
 
 }
