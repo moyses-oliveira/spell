@@ -46,8 +46,8 @@ class Bootstrap {
         $route = Route::getCollection()->findByUrl(Server::getAppUri());
         $this->setRoute($route);
         $urs = new URS($this->getRoute()->getUrl());
-        Route::configure($this->getRootPath(), $urs);
-        App::configure($this->getRoute(), $this->getRootPath());
+        Route::configure($path, $urs);
+        App::configure($this->getRoute(), Route::getPath());
         $this->loadMethod();
     }
 
@@ -64,7 +64,6 @@ class Bootstrap {
         if(!$this->ctrl)
             return false;
 
-        $this->loadViewContent();
         $this->ctrl->setTheme($this->getRoute()->getTheme());
         $this->authenticate();
         $action = strtolower(Route::getAction());
@@ -93,18 +92,6 @@ class Bootstrap {
 
         if(!call_user_func_array([$this->ctrl, $method], []))
             exit;
-    }
-
-    /**
-     * 
-     * $return $theme
-     */
-    public function loadViewContent()
-    {
-        $theme = $this->getRoute()->getTheme();
-        $viewPath = Path::combine([$this->getRootPath(), App::getPath(), 'View', Route::getController()]);
-        $viewFile = Route::getAction() . '.php';
-        $theme->addView('content', new View($viewPath, $viewFile));
     }
 
     /**
