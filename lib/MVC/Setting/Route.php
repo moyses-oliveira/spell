@@ -2,8 +2,6 @@
 
 namespace Spell\MVC\Setting;
 
-use Spell\UI\Layout\Theme;
-
 class Route {
 
     /**
@@ -20,7 +18,7 @@ class Route {
 
     /**
      *
-     * @var Theme
+     * @var string
      */
     private $theme = '';
 
@@ -66,19 +64,19 @@ class Route {
 
     /**
      * 
-     * @return Theme
+     * @return string
      */
-    public function getTheme(): Theme
+    public function getTheme(): string
     {
         return $this->theme;
     }
 
     /**
      * 
-     * @param Theme $theme
+     * @param string $theme
      * @return $this
      */
-    public function setTheme(Theme $theme)
+    public function setTheme(string $theme)
     {
         $this->theme = $theme;
         return $this;

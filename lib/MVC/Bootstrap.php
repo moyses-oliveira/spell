@@ -6,6 +6,7 @@ use Spell\Flash\Path;
 use Spell\Flash\Server;
 use Spell\MVC\Flash\Route;
 use Spell\MVC\Flash\App;
+use Spell\MVC\Flash\Theme;
 use Spell\UI\Layout\View;
 use Spell\Server\URS;
 
@@ -25,12 +26,6 @@ class Bootstrap {
 
     /**
      *
-     * @var string 
-     */
-    private $rootPath = null;
-
-    /**
-     *
      * @var \Spell\MVC\Setting\Route 
      */
     private $route = null;
@@ -42,7 +37,6 @@ class Bootstrap {
      */
     public function __construct(string $path)
     {
-        $this->setRootPath($path);
         $route = Route::getCollection()->findByUrl(Server::getAppUri());
         $this->setRoute($route);
         $urs = new URS($this->getRoute()->getUrl());
@@ -63,8 +57,8 @@ class Bootstrap {
 
         if(!$this->ctrl)
             return false;
-
-        $this->ctrl->setTheme($this->getRoute()->getTheme());
+        
+        $this->ctrl->setTheme(Theme::get($this->getRoute()->getTheme()));
         $this->authenticate();
         $action = strtolower(Route::getAction());
         $methodUcwords = ucwords(str_replace(['-', '_'], ' ', $action));
@@ -135,17 +129,6 @@ class Bootstrap {
         $theme->addView('content', new View($theme->getPath(), 'error.php'));
         $theme->getView('content')->setData(compact('message', 'code'));
         echo $theme->render();
-    }
-
-    public function getRootPath(): string
-    {
-        return $this->rootPath;
-    }
-
-    public function setRootPath(string $rootPath): Bootstrap
-    {
-        $this->rootPath = $rootPath;
-        return $this;
     }
 
     public function getRoute(): Setting\Route

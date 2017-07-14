@@ -22,7 +22,7 @@ class RouteCollection {
         return $this->collection[$key] ?? null;
     }
 
-    public function add(string $key, string $url, string $namespace, Theme $theme)
+    public function add(string $key, string $url, string $namespace, string $theme)
     {
         $route = new Route();
         $route->setUrl($url);
