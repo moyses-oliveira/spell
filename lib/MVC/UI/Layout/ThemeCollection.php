@@ -5,6 +5,9 @@ namespace Spell\MVC\UI\Layout;
 use Spell\Flash\Path;
 use Spell\MVC\Flash\App;
 use Spell\MVC\Flash\Route;
+use Spell\UI\Layout\Theme;
+use Spell\UI\Layout\View;
+
 /**
  * 
  *

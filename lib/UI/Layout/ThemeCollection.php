@@ -13,7 +13,7 @@ class ThemeCollection {
      *
      * @var array 
      */
-    private $collection = [];
+    protected $collection = [];
 
     /**
      * 
