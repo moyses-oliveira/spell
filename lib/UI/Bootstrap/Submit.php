@@ -15,7 +15,10 @@ class Submit extends \Spell\UI\Data\Button {
     }
 
     public function stylize() {
-        $this->getField()->setClasses(['btn' ,'btn-primary', 'pull-right']);
+        $this->getField()
+            ->addClass('btn')
+            ->addClass('btn-primary')
+            ->addClass('pull-right');
     }
     
     public function render(int $level = 0): string

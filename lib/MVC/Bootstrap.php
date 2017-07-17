@@ -121,7 +121,7 @@ class Bootstrap {
 
     private function exception($code, $message)
     {
-        $theme = $this->getRoute()->getTheme()->setFile('clean.php');
+        $theme = Theme::get($this->getRoute()->getTheme())->setFile('clean.php');
         $theme->addView('content', new View($theme->getPath(), 'error.php'));
         $theme->getView('content')->setData(compact('message', 'code'));
         echo $theme->render();
