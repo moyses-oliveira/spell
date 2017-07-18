@@ -2,8 +2,6 @@
 
 namespace Spell\MVC\Setting;
 
-use Spell\UI\Layout\Theme;
-
 /**
  * Description of RouteCollection
  *
@@ -38,15 +36,18 @@ class RouteCollection {
 
     public function findByUrl(string $url): Route
     {
-        foreach($this->collection as $route):
-            /* @var $route \Spell\MVC\Setting\Route */
-            $routeUrl = $route->getUrl();
-            if(substr(strtolower($url), 0, strlen($routeUrl)) === $routeUrl)
+        foreach($this->collection as $route)
+            if($this->routeCheck($url, $route->getUrl()))
                 return $route;
 
-        endforeach;
-
         throw new \Exception('The application cannot be configurated, no route found.');
+    }
+    
+    private function routeCheck($entry, $expression) {
+        if(substr($expression, 0, 2) !== '/^')
+            return substr(strtolower($entry), 0, strlen($expression)) === $expression;
+        
+        return !!filter_var($entry, FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $expression]]);
     }
 
 }

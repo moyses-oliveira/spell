@@ -43,6 +43,20 @@ class Theme extends AbstractView
 
     /**
      * 
+     * @param string $path
+     */
+    public function setPath($path)
+    {
+        $setting = Path::combine([$path, 'setting.php']);
+        if(file_exists($setting))
+            require_once $setting;
+        
+        $this->path = $path;
+        return $this;
+    }
+
+    /**
+     * 
      * @return \Spell\UI\Layout\Head 
      */
     public function getHead()

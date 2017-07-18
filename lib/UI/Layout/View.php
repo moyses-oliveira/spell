@@ -20,12 +20,6 @@ class View extends AbstractView
     use Archive;
 
     /**
-     *
-     * @var \Spell\UI\Layout\Theme 
-     */
-    private $theme = null;
-
-    /**
      * 
      * @param string $path
      * @param string $file
@@ -36,24 +30,6 @@ class View extends AbstractView
         $this->setPath($path);
         $this->setFile($file);
         $this->setData($data);
-    }
-
-    /**
-     * 
-     * @param \Spell\UI\Layout\Theme $theme
-     */
-    public function setTheme(Theme $theme)
-    {
-        $this->theme = $theme;
-    }
-
-    /**
-     * 
-     * @return \Spell\UI\Layout\Theme
-     */
-    public function getTheme()
-    {
-        return $this->theme;
     }
 
     /**
