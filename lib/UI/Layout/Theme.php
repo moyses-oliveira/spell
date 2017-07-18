@@ -49,7 +49,7 @@ class Theme extends AbstractView
     {
         $setting = Path::combine([$path, 'setting.php']);
         if(file_exists($setting))
-            require_once $setting;
+            require $setting;
         
         $this->path = $path;
         return $this;
