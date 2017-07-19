@@ -76,8 +76,8 @@ class Route {
         $slice = str_replace(['-'], ' ', strtolower(static::$module));
         static::$controller = str_replace(' ', '', ucwords($slice));
     }
-    
-    public static function getUrs() : URS
+
+    public static function getUrs(): URS
     {
         return static::$urs;
     }
@@ -121,8 +121,9 @@ class Route {
     {
         return static::getUrs()->getSite();
     }
-    
-    public static function getServerName(){
+
+    public static function getServerName()
+    {
         return static::getUrs()->getServerName();
     }
 
@@ -189,7 +190,11 @@ class Route {
      */
     public static function setUrl()
     {
-        return static::setUrlArray(func_get_args());
+        $path = func_get_args();
+        if($path[0] !== false && $path[0] !== Route::getRoot())
+            array_unshift($path, Route::getRoot());
+
+        return static::setUrlArray($path);
     }
 
     /**
