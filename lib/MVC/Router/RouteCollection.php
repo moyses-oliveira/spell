@@ -1,6 +1,6 @@
 <?php
 
-namespace Spell\MVC\Setting;
+namespace Spell\MVC\Router;
 
 /**
  * Description of RouteCollection
@@ -20,12 +20,9 @@ class RouteCollection {
         return $this->collection[$key] ?? null;
     }
 
-    public function add(string $key, string $url, string $namespace, string $theme)
+    public function add(string $key, string $expression, string $namespace, string $theme, string $mode = 'Default')
     {
-        $route = new Route();
-        $route->setUrl($url);
-        $route->setNamespace($namespace);
-        $route->setTheme($theme);
+        $route = new Route($expression, $namespace, $theme, $mode);
         $this->addRoute($key, $route);
     }
 
@@ -37,17 +34,10 @@ class RouteCollection {
     public function findByUrl(string $url): Route
     {
         foreach($this->collection as $route)
-            if($this->routeCheck($url, $route->getUrl()))
+            if($route->check($url))
                 return $route;
 
         throw new \Exception('The application cannot be configurated, no route found.');
-    }
-    
-    private function routeCheck($entry, $expression) {
-        if(substr($expression, 0, 2) !== '/^')
-            return substr(strtolower($entry), 0, strlen($expression)) === $expression;
-        
-        return !!filter_var($entry, FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $expression]]);
     }
 
 }
