@@ -3,7 +3,7 @@
 namespace Spell\MVC\Flash;
 
 use Spell\Flash\Path;
-use Spell\MVC\Setting\RouteCollection;
+use Spell\MVC\Router\RouteCollection;
 use Spell\Server\URS;
 
 /**
