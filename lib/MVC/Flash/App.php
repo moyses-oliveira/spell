@@ -7,8 +7,7 @@ namespace Spell\MVC\Flash;
  *
  * @author moysesoliveira
  */
-class App
-{
+class App {
 
     /**
      *
@@ -42,9 +41,9 @@ class App
 
     /**
      * 
-     * @param \Spell\MVC\Setting\Route $route
+     * @param \Spell\MVC\Router\Route $route
      */
-    public static function configure(\Spell\MVC\Setting\Route $route, string $root)
+    public static function configure(\Spell\MVC\Router\Route $route, string $root)
     {
         static::$root = $root;
         static::$route = $route->getUrl();

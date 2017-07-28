@@ -26,14 +26,14 @@ class Bootstrap {
 
     /**
      *
-     * @var \Spell\MVC\Setting\Route 
+     * @var \Spell\MVC\Router\Route 
      */
     private $route = null;
 
     /**
      * 
      * @param string $path
-     * @param \Spell\MVC\Setting\RouteCollection $routeCollection
+     * @param \Spell\MVC\Router\RouteCollection $routeCollection
      */
     public function __construct(string $path)
     {
@@ -57,7 +57,7 @@ class Bootstrap {
 
         if(!$this->ctrl)
             return false;
-        
+
         $this->ctrl->setTheme(Theme::get($this->getRoute()->getTheme()));
         $this->authenticate();
         $action = strtolower(Route::getAction());
@@ -79,7 +79,7 @@ class Bootstrap {
     {
         if(method_exists($this->ctrlClass, 'authenticate'))
             call_user_func_array([$this->ctrl, 'authenticate'], []);
-        
+
         if(method_exists($this->ctrlClass, '__settings'))
             call_user_func_array([$this->ctrl, '__settings'], []);
     }
@@ -127,12 +127,12 @@ class Bootstrap {
         echo $theme->render();
     }
 
-    public function getRoute(): Setting\Route
+    public function getRoute(): Router\Route
     {
         return $this->route;
     }
 
-    public function setRoute(Setting\Route $route): Bootstrap
+    public function setRoute(Router\Route $route): Bootstrap
     {
         $this->route = $route;
         return $this;
