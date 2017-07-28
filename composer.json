@@ -2,7 +2,7 @@
     "name": "moyses-oliveira/spell",
     "description": "PHP Framework to fast starter applications full OOP",
     "type": "library",
-    "version": "1.0.1", 
+    "version": "1.0.2", 
     "require": {
         "php": ">=7.1",
         "doctrine/orm": "2.5.6",
