@@ -141,7 +141,7 @@ class Route {
         $this->theme = $theme;
     }
 
-    public function check($entry){var_dump($this->getMode());
+    public function check($entry){
         switch($this->getMode()):
             case static::MODE_DEFAULT;
                 $this->setUrl($this->expression);
