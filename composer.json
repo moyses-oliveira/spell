@@ -1,6 +1,6 @@
 {
     "name": "moyses-oliveira/spell",
-    "description": "PHP Framework to fast starter applications",
+    "description": "PHP Framework to fast starter applications full OOP",
     "type": "library",
     "version": "1.0.1", 
     "require": {
