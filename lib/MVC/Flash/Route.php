@@ -52,7 +52,7 @@ class Route {
 
     /**
      *
-     * @var \Spell\MVC\Setting\RouteCollection 
+     * @var \Spell\MVC\Router\RouteCollection 
      */
     private static $collection;
 
@@ -60,7 +60,7 @@ class Route {
      * 
      * @param string $path
      * @param \Spell\Server\URS $urs
-     * @param \Spell\MVC\Setting\RouteCollection $collection
+     * @param \Spell\MVC\Router\RouteCollection $collection
      */
     public static function configure(string $path, URS $urs)
     {
@@ -147,7 +147,7 @@ class Route {
         return static::$collection;
     }
 
-    public static function get(string $key): ?\Spell\MVC\Setting\Route
+    public static function get(string $key): ?\Spell\MVC\Router\Route
     {
         return static::getCollection()->get($key);
     }
