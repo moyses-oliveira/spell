@@ -20,7 +20,7 @@ class Button extends Field {
         $this->setName($name);
         $attributes = array_merge(compact('name', 'value', 'type'), $attr);
         $this->setField('button')->getField()->setAttributes($attributes)->setContent($content);
-        $uid = base_convert(rand(0, pow(10, 10)), 10, 36);
+        $uid = base_convert(rand(0, intval(pow(10, 10))), 10, 36);
         $nameid = str_replace(['[]', '[', ']'], [$uid, '-', '-'], $name);
         $this->setId(implode('-', ['button', $type, $nameid]));
     }

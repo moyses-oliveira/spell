@@ -35,7 +35,7 @@ class Select extends Field {
     {
         $this->setName($name);
         $this->setField('select')->getField()->setAttributes(compact('name'));
-        $uid = base_convert(rand(0, pow(10, 10)), 10, 36);
+        $uid = base_convert(rand(0, intval(pow(10, 10))), 10, 36);
         $nameid = str_replace(['[]', '[', ']'], [$uid, '-', '-'], $name);
         $this->box = Tag::mk('div');
         if($label)
