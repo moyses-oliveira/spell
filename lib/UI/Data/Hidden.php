@@ -22,7 +22,7 @@ class Hidden extends Field {
         $attributes = array_merge(compact('name'), $attr);
         $this->setField('input')->getField()->setAttributes($attributes);
         $this->setValue($value);
-        $uid = base_convert(rand(0, pow(10, 10)), 10, 36);
+        $uid = $this->uid();
         $nameid = str_replace(['[]', '[', ']'], [$uid, '-', '-'], $name);
         $this->setId(implode('-', ['hidden', $nameid]));
     }

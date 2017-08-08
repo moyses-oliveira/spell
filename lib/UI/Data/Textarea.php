@@ -30,7 +30,7 @@ class Textarea extends Field {
 
         $this->box->appendChild($this->field);
 
-        $uid = base_convert(rand(0, pow(10, 10)), 10, 36);
+        $uid = $this->uid();
         $nameid = str_replace(['[]', '[', ']'], [$uid, '-', '-'], $name);
         $this->setId(implode('-', ['textarea', $nameid]));
         $this->setValue($value);

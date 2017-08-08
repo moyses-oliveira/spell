@@ -29,8 +29,8 @@ class Radio extends Field {
         if($checked)
             $this->getField()->setAttr('checked');
 
-        $uid = base_convert(rand(0, pow(10, 10)), 10, 36);
-        $mark = base_convert(rand(0, pow(10, 10)), 10, 36);
+        $uid = $this->uid();
+        $mark = $this->uid();
         $nameid = str_replace(['[]', '[', ']'], [$uid, '-', '-'], $name) . $mark;
         $this->getField()->setAttr('id', $nameid);
         $this->getLabel()->setAttr('for', $nameid);

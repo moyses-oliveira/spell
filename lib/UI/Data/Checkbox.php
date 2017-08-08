@@ -29,7 +29,7 @@ class Checkbox extends Field {
         if($checked)
             $this->getField()->setAttr('checked');
 
-        $uid = base_convert(rand(0, pow(10, 10)), 10, 36);
+        $uid = $this->uid();
         $nameid = str_replace(['[]', '[', ']'], [$uid, '-', '-'], $name);
         $this->getField()->setAttr('id', $nameid);
         $this->getLabel()->setAttr('for', $nameid);

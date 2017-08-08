@@ -37,7 +37,7 @@ abstract class Input extends Field {
     {
         $this->setName($name);
         $this->setField('input')->getField()->setAttributes(compact('name', 'value', 'type'));
-        $uid = base_convert(rand(0, pow(10, 10)), 10, 36);
+        $uid = $this->uid();
         $nameid = str_replace(['[]', '[', ']'], [$uid, '-', '-'], $name);
         $this->box = Tag::mk('div');
         if($label)
