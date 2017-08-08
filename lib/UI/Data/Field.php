@@ -217,4 +217,9 @@ abstract class Field implements FieldInterface {
         return $this->value;
     }
 
+    
+    protected function uid()
+    {
+        return base_convert(rand(0, intval(pow(10, 10))), 10, 36);
+    }
 }
