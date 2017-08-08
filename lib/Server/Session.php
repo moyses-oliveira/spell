@@ -33,7 +33,7 @@ class Session {
      * @param string $key
      * @return string, array
      */
-    public function getParam(string $key)
+    public function get(string $key)
     {
         return $_SESSION[$key] ?? null;
     }
@@ -44,7 +44,7 @@ class Session {
      * @param string $key
      * @param * $value
      */
-    public function setParam(string $key, $value)
+    public function set(string $key, $value)
     {
         $_SESSION[$key] = $value;
     }
