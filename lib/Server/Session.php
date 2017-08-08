@@ -57,7 +57,7 @@ class Session {
     public function setParams($params)
     {
         foreach($params as $key => $value)
-            $this->setParam($key, $value);
+            $this->set($key, $value);
     }
 
     /**
