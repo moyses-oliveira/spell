@@ -4,9 +4,9 @@
  * Path class
  *  
  * @author Moysés Filipe Lopes Peixoto de Oliveira
- * @version 1.0
+ * @version 1.1
  * @access public
- * @modification 2016-10-20
+ * @modification 2017-08-08
  */
 
 namespace Spell\Flash;
@@ -41,6 +41,9 @@ class Path {
         $keys = array_keys($pathArray);
         foreach($keys as $k):
             $new_path = static::combine(array_slice($pathArray, 0, $k + 1));
+            if(!$new_path)
+                continue;
+            
             static::dirMaker($new_path);
         endforeach;
         return true;
