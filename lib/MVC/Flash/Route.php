@@ -3,6 +3,7 @@
 namespace Spell\MVC\Flash;
 
 use Spell\Flash\Path;
+use Spell\Flash\Server;
 use Spell\MVC\Router\RouteCollection;
 use Spell\Server\URS;
 
@@ -18,7 +19,7 @@ class Route {
      *
      * @var string 
      */
-    private static $module = null;
+    private static $module = 'home';
 
     /**
      *
@@ -37,6 +38,12 @@ class Route {
      * @var \Spell\Server\URS
      */
     private static $urs = null;
+
+    /**
+     *
+     * @var \Spell\MVC\Router\Route
+     */
+    private static $route = null;
 
     /**
      *
@@ -59,22 +66,50 @@ class Route {
     /**
      * 
      * @param string $path
-     * @param \Spell\Server\URS $urs
-     * @param \Spell\MVC\Router\RouteCollection $collection
+     * @return \Spell\MVC\Router\Route
      */
-    public static function configure(string $path, URS $urs)
+    public static function bootstrap(string $path): \Spell\MVC\Router\Route
     {
-        static::$urs = $urs;
-        static::$path = $path;
-        list($module, $action) = [$urs->getParam(0), $urs->getParam(1)];
-        static::$module = !$module ? 'home' : $module;
+        static::loadRoute();
+        static::setPath($path);
+        static::$urs = new URS(static::$route->getUrl());
+        list(static::$module, $action) = [static::$urs->getParam(0), static::$urs->getParam(1)];
+        
+        if(!static::$module)
+            static::$module = static::getRoute()->getDefaultMode();
+
         static::$action = !$action ? 'index' : strtolower($action);
 
-        $urls = array_slice($urs->getParams(), 2);
+        $urls = array_slice(static::$urs->getParams(), 2);
         static::$params = array_slice($urls, 0);
 
         $slice = str_replace(['-'], ' ', strtolower(static::$module));
         static::$controller = str_replace(' ', '', ucwords($slice));
+        return static::getRoute();
+    }
+
+    /**
+     * 
+     * @return \Spell\MVC\Router\Route
+     */
+    public static function loadRoute(): \Spell\MVC\Router\Route
+    {
+        static::$route = static::getCollection()->findByUrl(Server::getAppUri());
+        return static::getRoute();
+    }
+
+    /**
+     * 
+     * @return \Spell\MVC\Router\Route
+     */
+    public static function getRoute(): \Spell\MVC\Router\Route
+    {
+        return static::$route;
+    }
+
+    public static function getAction()
+    {
+        return static::$action;
     }
 
     public static function getUrs(): URS
@@ -82,9 +117,9 @@ class Route {
         return static::$urs;
     }
 
-    public static function getAction()
+    public static function setPath(string $path)
     {
-        return static::$action;
+        static::$path = $path;
     }
 
     public static function getModule()

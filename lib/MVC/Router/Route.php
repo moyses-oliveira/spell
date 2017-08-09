@@ -35,6 +35,12 @@ class Route {
      *
      * @var string
      */
+    private $defaultModule = 'home';
+
+    /**
+     *
+     * @var string
+     */
     private $mode = null;
 
     
@@ -126,6 +132,25 @@ class Route {
      * 
      * @return string
      */
+    public function getDefaultMode(): string
+    {
+        return $this->defaultModule;
+    }
+
+    /**
+     * 
+     * @param string $defaultModule
+     * @return $this
+     */
+    public function setDefaultMode(string $defaultModule)
+    {
+        $this->defaultModule = $defaultModule;
+    }
+
+    /**
+     * 
+     * @return string
+     */
     public function getTheme(): string
     {
         return $this->theme;
@@ -141,6 +166,11 @@ class Route {
         $this->theme = $theme;
     }
 
+    /**
+     * 
+     * @param srting $entry
+     * @return boolean
+     */
     public function check($entry){
         switch($this->getMode()):
             case static::MODE_DEFAULT;

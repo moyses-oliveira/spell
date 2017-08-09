@@ -33,14 +33,10 @@ class Bootstrap {
     /**
      * 
      * @param string $path
-     * @param \Spell\MVC\Router\RouteCollection $routeCollection
      */
     public function __construct(string $path)
     {
-        $route = Route::getCollection()->findByUrl(Server::getAppUri());
-        $this->setRoute($route);
-        $urs = new URS($this->getRoute()->getUrl());
-        Route::configure($path, $urs);
+        $this->route = Route::bootstrap($path);
         App::configure($this->getRoute(), Route::getPath());
         $this->loadMethod();
     }
