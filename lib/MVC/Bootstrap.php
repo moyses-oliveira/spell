@@ -73,11 +73,11 @@ class Bootstrap {
 
     private function authenticate()
     {
-        if(method_exists($this->ctrlClass, 'authenticate'))
-            call_user_func_array([$this->ctrl, 'authenticate'], []);
-
         if(method_exists($this->ctrlClass, '__settings'))
             call_user_func_array([$this->ctrl, '__settings'], []);
+        
+        if(method_exists($this->ctrlClass, 'authenticate'))
+            call_user_func_array([$this->ctrl, 'authenticate'], []);
     }
 
     /**
