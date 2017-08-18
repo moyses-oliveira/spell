@@ -79,7 +79,9 @@ abstract class AbstractEntity implements EntityInterface {
         if(!$pk)
             return $this;
 
-        return $this->getEm($alias)->find(get_class($this), $pk);
+        $entity = $this->getEm($alias)->find(get_class($this), $pk);
+        $this->fromArray($entity->toArray());
+        return $entity;
     }
 
     /**
