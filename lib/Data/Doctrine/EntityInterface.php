@@ -34,7 +34,7 @@ interface EntityInterface {
      * @param string $alias
      * @return \Spell\Data\Doctrine\EntityInterface|null
      */
-    public function load(?string $pk = null, string $alias = 'default'): ?EntityInterface;
+    public function load(string $pk, string $alias = 'default'): ?EntityInterface;
     
     
     /**

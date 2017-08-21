@@ -74,12 +74,12 @@ abstract class AbstractEntity implements EntityInterface {
      * @param string $alias
      * @return \Spell\Data\Doctrine\EntityInterface|null
      */
-    public function load(?string $pk = null, string $alias = 'default'): ?EntityInterface
+    public function load(string $pk, string $alias = 'default'): ?EntityInterface
     {
-        if(!$pk)
-            return $this;
-
         $entity = $this->getEm($alias)->find(get_class($this), $pk);
+        if(!$entity)
+            return null;
+        
         $this->fromArray($entity->toArray());
         return $entity;
     }
