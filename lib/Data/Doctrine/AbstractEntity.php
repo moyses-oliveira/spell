@@ -85,7 +85,6 @@ abstract class AbstractEntity implements EntityInterface {
         $uw = $em->getUnitOfWork();
         $this->fromArray($data);
         $uw->registerManaged($this, $uw->getEntityIdentifier($entity), $data);
-
         return $entity;
     }
 
@@ -96,10 +95,21 @@ abstract class AbstractEntity implements EntityInterface {
      */
     public function persist(array $data, string $alias = 'default'): EntityInterface
     {
-        $this->fromArray($data);
         $em = $this->getEm($alias);
-        $em->persist($this);
+        $uw = $em->getUnitOfWork();
+        $new = !$uw->isInIdentityMap($this);
+        if($new):
+            $this->fromArray($data);
+            $em->persist($this);
+            $em->flush();
+            return $this;
+        endif;
+        $ids = $uw->getEntityIdentifier($this);
+        $entity = $em->find(get_class($this), $ids);
+        $entity->fromArray($data);
+        $em->persist($entity);
         $em->flush();
+        $this->fromArray($data);
         return $this;
     }
 
