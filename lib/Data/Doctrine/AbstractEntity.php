@@ -76,11 +76,16 @@ abstract class AbstractEntity implements EntityInterface {
      */
     public function load(string $pk, string $alias = 'default'): ?EntityInterface
     {
-        $entity = $this->getEm($alias)->find(get_class($this), $pk);
+        $em = $this->getEm($alias);
+        $entity = $em->find(get_class($this), $pk);
         if(!$entity)
             return null;
-        
-        $this->fromArray($entity->toArray());
+
+        $data = $entity->toArray();
+        $uw = $em->getUnitOfWork();
+        $this->fromArray($data);
+        $uw->registerManaged($this, $uw->getEntityIdentifier($entity), $data);
+
         return $entity;
     }
 
