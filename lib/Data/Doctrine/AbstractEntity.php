@@ -81,10 +81,7 @@ abstract class AbstractEntity implements EntityInterface {
         if(!$entity)
             return null;
 
-        $data = $entity->toArray();
-        $uw = $em->getUnitOfWork();
-        $this->fromArray($data);
-        $uw->registerManaged($this, $uw->getEntityIdentifier($entity), $data);
+        $this->fromArray($entity->toArray());
         return $entity;
     }
 
@@ -95,22 +92,23 @@ abstract class AbstractEntity implements EntityInterface {
      */
     public function persist(array $data, string $alias = 'default'): EntityInterface
     {
+        $fnNull = function($id) {
+            return null;
+        };
+        $entityName = get_class($this);
+        $current = $this->toArray() + $data;
         $em = $this->getEm($alias);
         $uw = $em->getUnitOfWork();
-        $new = !$uw->isInIdentityMap($this);
-        if($new):
-            $this->fromArray($data);
-            $em->persist($this);
-            $em->flush();
-            return $this;
-        endif;
-        $ids = $uw->getEntityIdentifier($this);
-        $entity = $em->find(get_class($this), $ids);
-        $entity->fromArray($data);
+        $model = $em->getPartialReference($entityName, 0);
+        $pks = array_map($fnNull, $uw->getEntityIdentifier($model));
+        $ids = array_intersect_key($current, $pks) + $pks;
+        $entity = $ids === $pks ? new $entityName() : $em->find($entityName, $ids);
+        $this->fromArray($data);
+        $entity->fromArray($this->toArray());
         $em->persist($entity);
         $em->flush();
-        $this->fromArray($data);
-        return $this;
+        $this->fromArray($entity->toArray());
+        return $entity;
     }
 
     /**
