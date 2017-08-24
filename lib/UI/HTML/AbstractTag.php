@@ -402,9 +402,18 @@ abstract class AbstractTag implements TagInterface {
 
         $cfg = array();
         foreach($this->attributes as $k => $v)
-            $cfg[] = $k . '="' . str_replace('"', '&quot;', $v) . '"';
+            $cfg[] = "$k=\"{$this->escapeAttr($v)}\"";
 
         return ' ' . implode(' ', $cfg);
+    }
+    
+    /**
+     * 
+     * @param type $v
+     * @return type
+     */
+    private function escapeAttr($v) {
+        return htmlspecialchars($v, ENT_COMPAT);
     }
 
 }
