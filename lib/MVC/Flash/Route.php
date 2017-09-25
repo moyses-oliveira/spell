@@ -76,7 +76,7 @@ class Route {
         list(static::$module, $action) = [static::$urs->getParam(0), static::$urs->getParam(1)];
         
         if(!static::$module)
-            static::$module = static::getRoute()->getDefaultMode();
+            static::$module = static::getRoute()->getDefaultModule();
 
         static::$action = !$action ? 'index' : strtolower($action);
 
