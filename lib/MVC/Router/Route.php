@@ -6,13 +6,13 @@ class Route {
 
     const MODE_DEFAULT = 'Default';
     const MODE_REGEX = 'Regex';
-    
+
     /**
      *
      * @var string 
      */
     private $expression = '';
-    
+
     /**
      *
      * @var string 
@@ -43,7 +43,6 @@ class Route {
      */
     private $mode = null;
 
-    
     public function __construct(string $expression, string $namespace, string $theme, string $mode = 'DEFAULT')
     {
         $this->setExpression($expression);
@@ -51,12 +50,12 @@ class Route {
         $this->setTheme($theme);
         $this->setMode($mode);
     }
-    
+
     /**
      * 
      * @return string
      */
-    public function getUrl() : string
+    public function getUrl(): string
     {
         return $this->url;
     }
@@ -70,12 +69,12 @@ class Route {
     {
         $this->url = $url;
     }
-    
+
     /**
      * 
      * @return string
      */
-    public function getExpression() : string
+    public function getExpression(): string
     {
         return $this->expression;
     }
@@ -132,7 +131,7 @@ class Route {
      * 
      * @return string
      */
-    public function getDefaultMode(): string
+    public function getDefaultModule(): string
     {
         return $this->defaultModule;
     }
@@ -142,7 +141,7 @@ class Route {
      * @param string $defaultModule
      * @return $this
      */
-    public function setDefaultMode(string $defaultModule)
+    public function setDefaultModule(string $defaultModule)
     {
         $this->defaultModule = $defaultModule;
     }
@@ -171,7 +170,8 @@ class Route {
      * @param srting $entry
      * @return boolean
      */
-    public function check($entry){
+    public function check($entry)
+    {
         switch($this->getMode()):
             case static::MODE_DEFAULT;
                 $this->setUrl($this->expression);
@@ -182,9 +182,10 @@ class Route {
                 $response = current($output);
                 if(!$response)
                     return false;
-                
+
                 $this->setUrl($response);
-                return !!$response; 
+                return !!$response;
         endswitch;
     }
+
 }
