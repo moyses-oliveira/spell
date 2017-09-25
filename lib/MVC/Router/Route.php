@@ -43,7 +43,7 @@ class Route {
      */
     private $mode = null;
 
-    public function __construct(string $expression, string $namespace, string $theme, string $mode = 'DEFAULT')
+    public function __construct(string $expression, string $namespace, string $theme, string $mode = 'Default')
     {
         $this->setExpression($expression);
         $this->setNamespace($namespace);
