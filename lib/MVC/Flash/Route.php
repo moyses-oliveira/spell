@@ -112,6 +112,11 @@ class Route {
         return static::$action;
     }
 
+    public static function setAction(string $action)
+    {
+        static::$action = $action;
+    }
+
     public static function getUrs(): URS
     {
         return static::$urs;
