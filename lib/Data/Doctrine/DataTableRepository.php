@@ -54,6 +54,8 @@ abstract class DataTableRepository extends AbstractRepository {
      */
     public function getTotal(\Doctrine\ORM\QueryBuilder $qb)
     {
+        $qb->resetDQLParts(['orderBy']);
+        $qb->resetDQLParts(['groupBy']);
         $result = $qb->select(['count(t) as total'])->setFirstResult(0)->setMaxResults(1)->getQuery()->getOneOrNullResult();
         return !!$result ? current($result) : 0;
     }
