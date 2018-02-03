@@ -123,7 +123,7 @@ class RadioGroup implements \Spell\UI\HTML\RenderInterface {
     protected function mergeCollection(){
         foreach($this->getCollection() as $radio):
             /* @var $radio \Spell\UI\Data\Radio */
-            if($this->getValue() && $radio->getField()->getAttr('value') == $this->getValue())
+            if($this->getValue() !== null && $radio->getField()->getAttr('value') === $this->getValue())
                $radio->getField()->setAttr('checked'); 
                 
             $this->getCollectionContainer()->appendChild($radio->getBox());
