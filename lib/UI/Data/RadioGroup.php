@@ -9,7 +9,7 @@ use Spell\UI\HTML\Tag;
  *
  * @author moysesoliveira
  */
-class RadioGroup {
+class RadioGroup implements \Spell\UI\HTML\RenderInterface {
 
     /**
      *
@@ -114,7 +114,7 @@ class RadioGroup {
         return $this->collection;
     }
 
-    public function render(): string
+    public function render(int $level = 0): string
     {
         $this->mergeCollection();
         return $this->getFieldset()->render();

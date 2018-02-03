@@ -42,7 +42,7 @@ class Radio extends Field {
      * 
      * @return string
      */
-    public function render(): string
+    public function render(int $level = 0): string
     {
         return $this->getBox()->render();
     }
