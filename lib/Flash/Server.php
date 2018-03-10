@@ -14,7 +14,7 @@ class Server
     public static function getAppUri()
     {
         $p = static::getPort();
-        return trim(strtolower(static::getName() . ($p == 80 ? '' : ':' . $p) . static::getUri()), '/');
+        return trim(strtolower(static::getName() . (in_array(intval($p), [80, 443]) ? '' : ':' . $p) . static::getUri()), '/');
     }
 
     public static function getPort()
