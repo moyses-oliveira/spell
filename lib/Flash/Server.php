@@ -13,8 +13,7 @@ class Server
     //put your code here
     public static function getAppUri()
     {
-        $p = static::getPort();
-        return trim(strtolower(static::getName() . (in_array(intval($p), [80, 443]) ? '' : ':' . $p) . static::getUri()), '/');
+        return trim(strtolower(static::getName() . static::getUri()), '/');
     }
 
     public static function getPort()
@@ -22,9 +21,9 @@ class Server
         return $_SERVER['SERVER_PORT'];
     }
 
-    public static function getName()
+    public static function getName(bool $port = true)
     {
-        return $_SERVER['SERVER_NAME'];
+        return $port ? $_SERVER['HTTP_HOST'] : strstr($_SERVER['HTTP_HOST'], ':', true);
     }
 
     public static function getUri()

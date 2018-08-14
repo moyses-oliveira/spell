@@ -12,6 +12,8 @@
 
 namespace Spell\Server;
 
+use Spell\Flash\Server;
+
 class URS {
 
     /**
@@ -115,7 +117,7 @@ class URS {
      */
     public function currentPage(): string
     {
-        return $this->getServerName() . $_SERVER['REQUEST_URI'];
+        return $this->getServerName() . Server::getUri();
     }
 
     /**
@@ -125,8 +127,7 @@ class URS {
      */
     public function getServerName(): string
     {
-        $port = $_SERVER['SERVER_PORT'];
-        return '//' . $_SERVER['SERVER_NAME'] . ($port == 80 ? '' : ':' . $port);
+        return '//' . Server::getName();
     }
 
     /**
@@ -166,7 +167,7 @@ class URS {
      */
     public function getUri(): string
     {
-        return $_SERVER['REQUEST_URI'];
+        return Server::getUri();
     }
 
     /**
@@ -319,17 +320,16 @@ class URS {
      */
     public function baseDomain(): ?string
     {
-        $is_ip = preg_match('/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\z/', $_SERVER['SERVER_NAME']);
+        $is_ip = preg_match('/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\z/', Server::getName(false));
         if($is_ip)
             throw new \Exception('This system dont\'t support IP access');
 
-        #$_SERVER
         $matches = [];
         $pattern = '/[a-z0-9\-]+(\.[a-z0-9\-]{2,3}$|\.[a-z0-9\-]{2,3}\.[a-z0-9\-]{2,3}$)/';
-        preg_match($pattern, $_SERVER['SERVER_NAME'], $matches, PREG_OFFSET_CAPTURE, 0);
+        preg_match($pattern, Server::getName(false), $matches, PREG_OFFSET_CAPTURE, 0);
 
         if(!is_array($matches))
-            return $_SERVER['SERVER_NAME'];
+            return Server::getName(false);
 
         return current(current($matches));
     }
