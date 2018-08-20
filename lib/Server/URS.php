@@ -53,7 +53,7 @@ class URS {
     public function __construct(string $site)
     {
         $this->site = '//' . strtolower(trim($site, '/')) . '/';
-        $this->index = '/' . preg_replace('/\/\/[a-zA-Z\d:\._-]+\/([\S]+)/', '$1', $this->site);
+        $this->index = preg_replace('/\/\/[a-zA-Z\d:\._-]+\/([\S]+)/', '$1', $this->site);
         $this->root = str_replace('index.php', '', $_SERVER['PHP_SELF']);
         $this->extract();
     }
