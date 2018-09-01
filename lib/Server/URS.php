@@ -63,14 +63,20 @@ class URS {
      */
     public function extract()
     {
-        $uri = current(explode('?', $_SERVER['REQUEST_URI']));
-        $break = explode(rtrim($this->index, '/'), $uri);
+        $parse = parse_url($_SERVER['REQUEST_URI']);
+        $uri = $parse['path'] ?? '';
+        $break = explode(trim($this->index, '/'), trim($uri, '/'));
+        
         if(empty($break[0]))
             unset($break[0]);
 
         $url = implode($this->index, $break);
 
         $urls = explode('/', $url);
+        
+        if(empty($urls[0]))
+            array_shift($urls);
+
         $this->extractParams($urls);
         $this->extractVars($urls);
     }
