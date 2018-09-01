@@ -2,10 +2,10 @@
     "name": "moyses-oliveira/spell",
     "description": "PHP Framework to fast starter applications full OOP",
     "type": "library",
-    "version": "1.0.8", 
+    "version": "1.0.10", 
     "require": {
         "php": ">=7.1",
-        "doctrine/orm": "^2.6",
+        "doctrine/orm": "v2.6.2",
         "zendframework/zend-loader": "^2.5",
         "zendframework/zend-mime": "^2.5",
         "zendframework/zend-stdlib": "^3.0",
