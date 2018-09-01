@@ -53,7 +53,7 @@ class URS {
     public function __construct(string $site)
     {
         $this->site = '//' . strtolower(trim($site, '/')) . '/';
-        $this->index = ltrim(parse_url($this->site, PHP_URL_PATH), '/');
+        $this->index = parse_url($this->site, PHP_URL_PATH);
         $this->root = str_replace('index.php', '', $_SERVER['PHP_SELF']);
         $this->extract();
     }
@@ -63,7 +63,7 @@ class URS {
      */
     public function extract()
     {
-        $uri = ltrim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
+        $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $urls = explode('/', substr($uri, strlen($this->index)));
         $this->extractParams($urls);
         $this->extractVars($urls);
