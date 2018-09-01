@@ -2,8 +2,8 @@
 
 /**
  * Simplify friendly URL Managment
- * 
- *  
+ *
+ *
  * @author Moysés Filipe Lopes Peixoto de Oliveira
  * @version 1.0
  * @access public
@@ -18,42 +18,42 @@ class URS {
 
     /**
      *
-     * @var string 
+     * @var string
      */
     private $site;
 
     /**
      *
-     * @var string 
+     * @var string
      */
     private $index;
 
     /**
      *
-     * @var string 
+     * @var string
      */
     private $root;
 
     /**
      *
-     * @var array 
+     * @var array
      */
     private $params = [];
 
     /**
      *
-     * @var array 
+     * @var array
      */
     private $vars = [];
 
     /**
-     * 
+     *
      * @param string $site
      */
     public function __construct(string $site)
     {
         $this->site = '//' . strtolower(trim($site, '/')) . '/';
-        $this->index = preg_replace('/\/\/[a-zA-Z\d:\._-]+\/([\S]+)/', '$1', $this->site);
+        $this->index = ltrim(parse_url($this->site, PHP_URL_PATH), '/');
         $this->root = str_replace('index.php', '', $_SERVER['PHP_SELF']);
         $this->extract();
     }
@@ -63,27 +63,15 @@ class URS {
      */
     public function extract()
     {
-        $parse = parse_url($_SERVER['REQUEST_URI']);
-        $uri = $parse['path'] ?? '';
-        $break = explode(trim($this->index, '/'), trim($uri, '/'));
-        
-        if(empty($break[0]))
-            unset($break[0]);
-
-        $url = implode($this->index, $break);
-
-        $urls = explode('/', $url);
-        
-        if(empty($urls[0]))
-            array_shift($urls);
-
+        $uri = ltrim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
+        $urls = explode('/', substr($uri, strlen($this->index)));
         $this->extractParams($urls);
         $this->extractVars($urls);
     }
 
     /**
      * Extract URL parameters from friendly URL
-     * 
+     *
      * @param array $urls
      */
     private function extractParams(array $urls)
@@ -98,7 +86,7 @@ class URS {
 
     /**
      * Extract URL variables from friendly URL
-     * 
+     *
      * @param array $urls
      */
     private function extractVars(array $urls)
@@ -118,7 +106,7 @@ class URS {
 
     /**
      * Current page url
-     * 
+     *
      * @return string
      */
     public function currentPage(): string
@@ -128,7 +116,7 @@ class URS {
 
     /**
      * Server Name
-     * 
+     *
      * @return string
      */
     public function getServerName(): string
@@ -137,8 +125,8 @@ class URS {
     }
 
     /**
-     * Index Server Name without path 
-     * 
+     * Index Server Name without path
+     *
      * @return string
      */
     public function getIndex(): string
@@ -147,8 +135,8 @@ class URS {
     }
 
     /**
-     * Root path server URI 
-     * 
+     * Root path server URI
+     *
      * @return string
      */
     public function getRoot(): string
@@ -158,7 +146,7 @@ class URS {
 
     /**
      * Website url
-     * 
+     *
      * @return string
      */
     public function getSite(): string
@@ -168,7 +156,7 @@ class URS {
 
     /**
      * Current URI
-     * 
+     *
      * @return string
      */
     public function getUri(): string
@@ -178,7 +166,7 @@ class URS {
 
     /**
      * List of friendly URL parameters
-     * 
+     *
      * @return array
      */
     public function getParams(): array
@@ -188,7 +176,7 @@ class URS {
 
     /**
      * List of friendly URL variables
-     * 
+     *
      * @return array
      */
     public function getVars(): array
@@ -198,7 +186,7 @@ class URS {
 
     /**
      * URL variable by key
-     * 
+     *
      * @param type $v
      * @return string|null
      */
@@ -212,7 +200,7 @@ class URS {
 
     /**
      * URL parameter by key
-     * 
+     *
      * @param type $k
      * @return string|null
      */
@@ -226,7 +214,7 @@ class URS {
 
     /**
      * URL build path
-     * 
+     *
      * @return string
      */
     public function getPath(): string
@@ -236,7 +224,7 @@ class URS {
 
     /**
      * Current URL protocol schema
-     * 
+     *
      * @return string
      */
     public function getSchema(): string
@@ -249,7 +237,7 @@ class URS {
 
     /**
      * Build friendly URL using string with accents, spaces and special characters
-     * 
+     *
      * @param string $str
      * @param string $code
      * @param string $ext
@@ -261,7 +249,7 @@ class URS {
     }
 
     /**
-     * 
+     *
      * @param string $str
      * @param array $replace
      * @param string $delimiter
@@ -283,8 +271,8 @@ class URS {
     }
 
     /**
-     * Get code from builded friendly URL 
-     * 
+     * Get code from builded friendly URL
+     *
      * @param string $url
      * @return string|null
      */
@@ -305,7 +293,7 @@ class URS {
     }
 
     /**
-     * 
+     *
      * @param string $url
      * @param string $key
      * @return string
@@ -320,7 +308,7 @@ class URS {
 
     /**
      * Extract baseDomain from current URL
-     * 
+     *
      * @return string|null
      * @throws \Exception
      */
@@ -342,7 +330,7 @@ class URS {
 
     /**
      * Check if string is an domain name
-     * 
+     *
      * @param string $d
      * @param bool $clean
      * @return bool
@@ -359,7 +347,7 @@ class URS {
     }
 
     /**
-     * 
+     *
      * @param string $url
      * @return string
      * @throws \Exception
