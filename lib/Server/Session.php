@@ -2,6 +2,8 @@
 
 namespace Spell\Server;
 
+use Spell\MVC\Flash\Route;
+
 /**
  * Description of Session
  *
@@ -21,9 +23,8 @@ class Session {
             throw new \Exception('Session already started.');
 
         session_name(md5($name));
-        if($timeoutMinutes)
-            session_set_cookie_params($timeoutMinutes * 60);
-
+        ini_set('session.cookie_path','/');
+        session_set_cookie_params($timeoutMinutes * 60, '/', Route::getServerName());
         session_start();
     }
 
