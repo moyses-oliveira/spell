@@ -24,7 +24,7 @@ class Session {
 
         session_name(md5($name));
         ini_set('session.cookie_path','/');
-        session_set_cookie_params($timeoutMinutes * 60, '/', Route::getServerName());
+        session_set_cookie_params($timeoutMinutes * 60, '/');
         session_start();
     }
 
